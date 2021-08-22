@@ -187,6 +187,9 @@
   text-align: right;
   padding: 10px;
 }
+.w-select {
+  min-width: 120px;
+}
 .w-svg {
   width: 100%;
   height: 100%;

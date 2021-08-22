@@ -1,0 +1,22 @@
+[2021-08-22T21:14:50.226] [INFO] default - 生成结束，目标地址： F:\workspace\publish\react\src\styles\com.less
+[2021-08-22T21:14:50.507] [INFO] default - 生成文件： F:\workspace\publish\react\es\BtnList\index.less
+[2021-08-22T21:14:50.635] [INFO] default - 生成文件： F:\workspace\publish\react\es\ComView\index.less
+[2021-08-22T21:14:51.032] [INFO] default - 生成文件： F:\workspace\publish\react\es\Flex\index.less
+[2021-08-22T21:14:51.096] [INFO] default - 生成文件： F:\workspace\publish\react\es\Form\index.less
+[2021-08-22T21:14:52.451] [INFO] default - 生成文件： F:\workspace\publish\react\es\Link\index.less
+[2021-08-22T21:14:52.515] [INFO] default - 生成文件： F:\workspace\publish\react\es\List\index.less
+[2021-08-22T21:14:52.579] [INFO] default - 生成文件： F:\workspace\publish\react\es\Modal\index.less
+[2021-08-22T21:14:52.642] [INFO] default - 生成文件： F:\workspace\publish\react\es\OptionInput\index.less
+[2021-08-22T21:14:52.706] [INFO] default - 生成文件： F:\workspace\publish\react\es\Pagination\index.less
+[2021-08-22T21:14:52.865] [INFO] default - 生成文件： F:\workspace\publish\react\es\Select\index.less
+[2021-08-22T21:14:52.912] [INFO] default - 生成文件： F:\workspace\publish\react\es\styles\common.less
+[2021-08-22T21:14:53.023] [INFO] default - 生成文件： F:\workspace\publish\react\es\SvgEditor\index.less
+[2021-08-22T21:14:53.151] [INFO] default - 生成文件： F:\workspace\publish\react\es\Swiper\index.less
+[2021-08-22T21:14:53.247] [INFO] default - 生成文件： F:\workspace\publish\react\es\Table\index.less
+[2021-08-22T21:14:53.310] [INFO] default - 生成文件： F:\workspace\publish\react\es\Tabs\index.less
+[2021-08-22T21:14:53.374] [INFO] default - 生成文件： F:\workspace\publish\react\es\Text\index.less
+[2021-08-22T21:14:53.438] [INFO] default - 生成文件： F:\workspace\publish\react\es\Tree\index.less
+[2021-08-22T21:14:53.502] [INFO] default - 生成文件： F:\workspace\publish\react\es\Upload\index.less
+[2021-08-22T21:14:53.599] [INFO] default - 生成结束，地址： F:\workspace\publish\react\src\styles\com.less
+[2021-08-22T21:14:53.600] [INFO] default - 开始编译成css，地址： F:\workspace\publish\react\dist\react.css
+[2021-08-22T21:14:58.129] [INFO] default - 开始拷贝

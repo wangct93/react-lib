@@ -6,42 +6,8 @@ import BtnList from "../BtnList";
 import {isFunc, objFind, toPromise} from "@wangct/util";
 import {getResizeSign, reduxConnect, showLoading,alertErrInfo,alertSucInfo} from "../frame";
 import Pagination from "../Pagination";
-
-const columns = [
-  // {
-  //   title:'标题1',
-  //   field:random(),
-  // },
-  // {
-  //   title:'标题2',
-  //   field:random(),
-  // },
-  // {
-  //   title:'标题3',
-  //   field:random(),
-  // },
-  // {
-  //   title:'标题4',
-  //   field:random(),
-  //   width:500,
-  // },
-  // {
-  //   title:'标题5',
-  //   field:random(),
-  //   width:500,
-  // },
-  // {
-  //   title:'标题6',
-  //   field:random(),
-  //   width:500,
-  // },
-  // {
-  //   title:'标题7',
-  //   field:random(),
-  //   width:500,
-  // },
-];
-
+import Checkbox from "../Checkbox";
+import {callFunc} from "@wangct/util/lib/util";
 
 /**
  * 表格组件
@@ -52,13 +18,17 @@ const columns = [
 }))
 export default class Table extends DefineComponent {
   state = {
-    columns,
+    columns:[],
     // data:getTestData(columns),
     hasScrollX:false,
     hasScrollY:false,
     fontSize:14,
     scrollLeftMin:true,
     scrollLeftMax:true,
+    rowSelection:{
+
+    },
+    rowClick:true,
   };
 
   componentDidMount() {
@@ -105,10 +75,6 @@ export default class Table extends DefineComponent {
       return pv + item.offsetWidth;
     },0);
     return tdSumWidth > trElem.getBoundingClientRect().width;
-  }
-
-  getColumns(){
-    return toAry(this.getProp('columns'));
   }
 
   getData(){
@@ -191,6 +157,100 @@ export default class Table extends DefineComponent {
     return this.getProp('fontSize') || 14;
   }
 
+  getTrProps(row,index){
+    const onRow = this.getProp('onRow');
+    let tdProps = {};
+    if(isFunc(onRow)){
+      tdProps = onRow(row,index);
+    }else{
+      tdProps = onRow || {};
+    }
+    const rowSelection = this.getProp('rowSelection');
+    if(rowSelection && this.getProp('rowClick')){
+      const tempClick = tdProps.onClick;
+      tdProps.onClick = (e) => {
+        const key = this.getRowKey(row,index);
+        const checked = this.getSelectedKeys().includes(key);
+        this.checkChange(key,!checked);
+        callFunc(tempClick,e);
+      };
+    }
+    return tdProps;
+  }
+
+  getSelectedKeys(){
+    const rowSelection = this.getProp('rowSelection');
+    const keys = rowSelection && rowSelection.selectedKeys;
+    if(keys){
+      return keys;
+    }
+    return toAry(this.getProp('selectedKeys'));
+  }
+
+  setSelectedKeys = (keys,rows) => {
+    this.setState({
+      selectedKeys:keys,
+      selectedRows:rows,
+    });
+    callFunc(this.props.onSelect,keys,rows);
+    const rowSelection = this.getProp('rowSelection');
+    if(rowSelection && rowSelection.onChange){
+      rowSelection.onChange(keys,rows);
+    }
+  };
+
+  getRowKey(row,index){
+    return index + '';
+  }
+
+  allCheckChange = (checked) => {
+    if(checked){
+      const data = this.getData();
+      this.setSelectedKeys(data.map((item,index) => this.getRowKey(item,index)),data);
+    }else{
+      this.setSelectedKeys([],[]);
+    }
+  };
+
+  checkChange = (key,checked) => {
+    const selectedKeys = this.getSelectedKeys();
+    if(checked){
+      this.setSelectedKeys([...selectedKeys,key])
+    }else{
+      this.setSelectedKeys(selectedKeys.filter((sKey) => sKey != key));
+    }
+  };
+
+  getColumns(){
+    const columns = super.getColumns();
+    const rowSelection = this.getProp('rowSelection');
+    if(rowSelection){
+      const isRadio = rowSelection.type === 'radio';
+      const selectedKeys = this.getSelectedKeys();
+      const data = this.getData();
+      const map = aryToObject(selectedKeys,(key) => key,() => true);
+      const isAllChecked = data.length && data.every((item,index) => {
+        return map[this.getRowKey(item,index)];
+      });
+      return [
+        {
+          title:isRadio ? '' : <Checkbox value={isAllChecked} onChange={this.allCheckChange} />,
+          field:'__select',
+          fitWidth:false,
+          width:60,
+          fixed:'left',
+          render:(v,row,index) => {
+            const key = this.getRowKey(row,index);
+            const props = rowSelection.getCheckboxProps ? rowSelection.getCheckboxProps(row,index) : {};
+            return <Checkbox {...props} value={map[key]} onChange={this.checkChange.bind(this,key)} />;
+          },
+        },
+        ...columns,
+      ]
+    }
+    return columns;
+  }
+
   getFixedContent(options = {}){
     const {hasFitColumn,isLeft = true} = options;
     const columns = this.getColumns().filter((col) => col.fixed === (isLeft ? 'left' : 'right'));
@@ -219,12 +279,13 @@ export default class Table extends DefineComponent {
         <div className="w-table-content">
           {
             this.getData().map((row,rowIndex) => {
-              return <div className="w-table-tr" key={rowIndex}>
+              const trProps = this.getTrProps(row,rowIndex);
+              return <div {...trProps} className={classNames('w-table-tr',trProps.className)} key={rowIndex}>
                 {
                   columns.map((col,index) => {
                     const {render} = col;
                     let value = row[col.field];
-                    value = render ? render(value,row,index) : value;
+                    value = render ? render(value,row,rowIndex) : value;
                     return <div style={this.getTdStyle(col,hasFitColumn)} className="w-table-td" key={index}>
                       <div className="w-table-td-content">
                         {value}
@@ -452,6 +513,7 @@ export class TableSearch extends DefineComponent {
           oldParams:params,
           list,
         });
+        this.getTable().setSelectedKeys([],[]);
         if(this.getProp('alertInfo') !== false){
           alertSucInfo(`查询到${list.length}条数据`);
         }
@@ -472,6 +534,7 @@ export class TableSearch extends DefineComponent {
   }
 
   render() {
+    const {props} = this;
     return <div className={classNames('w-table-search',this.isFit() && 'w-table-search-fit',this.props.className)}>
       <div className="w-header">
         <Form className="w-table-form" itemWidth="50%" ref={this.setForm} options={this.props.filterOptions} value={this.getFormValue()} onChange={this.formChange} />
@@ -479,9 +542,13 @@ export class TableSearch extends DefineComponent {
       </div>
       <div className="w-body">
         <Table
+          {...props.tableProps}
           columns={this.getColumns()}
           data={this.getList()}
           fit={this.isFit()}
+          ref={this.setTable}
+          onSelect={props.onSelect}
+          onRow={props.onRow}
         />
       </div>
       <div className="w-footer">

@@ -81,11 +81,16 @@ class Sider extends DefineComponent {
   }
 
   addEvent(){
-    document.addEventListener('scroll',this.scrollEvent);
+    this.removeEvent();
+    this.getScrollElem().addEventListener('scroll',this.scrollEvent);
+  }
+
+  getScrollElem(){
+    return this.getProp('scrollElem') || document;
   }
 
   removeEvent(){
-    document.removeEventListener('scroll',this.scrollEvent);
+    this.getScrollElem().removeEventListener('scroll',this.scrollEvent);
   }
 
   scrollEvent = (e) => {

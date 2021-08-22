@@ -1,12 +1,10 @@
-import {
-  asyncVisualOptions,
-  optionInputOptions,
-  selectOptions,
-  svgEditorOptions,
-  tableOptions,
-  uploadOptions
-} from "./options";
 import {FieldsRoutePaths} from "./dic";
+import asyncVisualOptions from "./options/asyncVisualOptions";
+import tableOptions from "./options/tableOptions";
+import uploadOptions from "./options/uploadOptions";
+import optionInputOptions from "./options/optionInputOptions";
+import svgEditorOptions from "./options/svgEditorOptions";
+import selectOptions from "./options/selectOptions";
 
 
 export default [

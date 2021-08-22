@@ -1,6 +1,6 @@
 {
   "name": "@wangct/react",
-  "version": "1.0.6-test.2",
+  "version": "1.0.7",
   "description": "react组件库",
   "main": "lib/index.js",
   "files": [
