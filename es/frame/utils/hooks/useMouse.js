@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import useMount from "./useMount";
-import {getThrottleFunc} from "@wangct/util/lib/util";
+import {getThrottleFunc} from "@wangct/util";
 
 export default function useMouse(elem = document){
 

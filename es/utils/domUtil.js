@@ -1,5 +1,5 @@
 
-import {callFunc, getThrottleFunc} from "@wangct/util/lib/util";
+import {callFunc, getThrottleFunc} from "@wangct/util";
 
 /**
  * 鼠标按下事件

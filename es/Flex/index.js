@@ -1,7 +1,7 @@
 import React from 'react';
-import {classNames} from "@wangct/util/lib/util";
 import DefineComponent from "../frame/components/DefineComponent";
 import {getDivProps} from "../utils/utils";
+import {classNames} from "@wangct/util/lib/browserUtil";
 
 /**
  * 布局元素

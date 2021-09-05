@@ -1,5 +1,5 @@
 
-import {callFunc, classNames} from "@wangct/util/lib/util";
+import {callFunc, classNames} from "@wangct/util";
 import React from "react";
 import DefineComponent from "../../frame/components/DefineComponent";
 import {mousedown} from "../../utils/domUtil";

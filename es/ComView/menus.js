@@ -5,6 +5,7 @@ import uploadOptions from "./options/uploadOptions";
 import optionInputOptions from "./options/optionInputOptions";
 import svgEditorOptions from "./options/svgEditorOptions";
 import selectOptions from "./options/selectOptions";
+import dragElemOptions from "./options/dragElemOptions";
 
 
 export default [
@@ -37,5 +38,10 @@ export default [
     title:'下拉框 Select',
     path:FieldsRoutePaths.select,
     options:selectOptions,
+  },
+  {
+    title:'拖拽 DragElem',
+    path:FieldsRoutePaths.dragElem,
+    options:dragElemOptions,
   }
 ];

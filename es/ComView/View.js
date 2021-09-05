@@ -1,8 +1,8 @@
 import React from "react";
 import {Divider, Tooltip} from "antd";
-import {classNames} from "@wangct/util/lib/util";
 import DefineComponent from "../frame/components/DefineComponent";
 import Icon from "../Icon";
+import {classNames} from "@wangct/util/lib/browserUtil";
 
 export default class ComViewContent extends DefineComponent {
   state = {

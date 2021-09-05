@@ -5,7 +5,7 @@ import DefineComponent from "../frame/components/DefineComponent";
 import {toAry} from "@wangct/util/lib/arrayUtil";
 import {toStr} from "@wangct/util/lib/stringUtil";
 import {isUndef} from "@wangct/util/lib/typeUtil";
-import {classNames} from "@wangct/util/lib/util";
+import {classNames} from "@wangct/util";
 import {getText, getValue} from "../utils/utils";
 import {AntSelect,AntTreeSelect} from "../utils/baseCom";
 import Icon from "../Icon";

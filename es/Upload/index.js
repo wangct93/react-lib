@@ -4,7 +4,7 @@
 import React, {useEffect, useState} from 'react';
 import DefineComponent from "../frame/components/DefineComponent";
 import Btn from "../Btn";
-import {classNames} from "@wangct/util/lib/util";
+import {classNames} from "@wangct/util";
 import {toAry} from "@wangct/util/lib/arrayUtil";
 import Flex, {FlexItem} from "../Flex";
 import Icon from "../Icon";

@@ -1,9 +1,10 @@
 import * as React from "react";
-import {callFunc, classNames} from "@wangct/util/lib/util";
+import {callFunc} from "@wangct/util/lib/util";
 import {toAry} from '@wangct/util';
 import {toNum} from "@wangct/util/lib/numberUtil";
 import DefineComponent from "../frame/components/DefineComponent";
 import {getNodeOption} from "./options";
+import {classNames} from "@wangct/util/lib/browserUtil";
 
 /**
  * SVG编辑器

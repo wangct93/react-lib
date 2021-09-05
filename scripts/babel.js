@@ -1,6 +1,7 @@
 const babel = require('@wangct/babel');
 const {pathResolve} = require("@wangct/node-util/lib/path");
 const util = require('@wangct/node-util');
+const {fileDelete} = require("@wangct/node-util/lib/file");
 const {spawn} = require("@wangct/node-util/lib/spawn");
 
 
@@ -9,6 +10,7 @@ start();
 async function start(){
   await spawn('dev',['frame','--output','es/frame']);
   await updateComponent();
+  await fileDelete('lib');
 
   babel({
     src:'es',
@@ -25,9 +27,9 @@ async function updateComponent(){
   let list = fs.readdirSync(pathResolve(componentDir));
   list = list.filter(item => {
     const filePath = pathResolve(componentDir,item);
-    return util.isDir(filePath) && util.isExist(pathResolve(filePath,'index.js'));
+    return util.isDir(filePath) && util.isExist(pathResolve(filePath,'index.js.js'));
   });
-  const componentOutput = pathResolve(componentDir,'index.js');
+  const componentOutput = pathResolve(componentDir,'index.js.js');
   const importContents = list.map(item => `import ${item} from './${item}';`);
   let content = `${importContents.join('')} export {${list.join(',')}};`;
   fs.writeFileSync(componentOutput,content);

@@ -1,8 +1,9 @@
 import * as React from "react";
 import DragSvgElem from "../DragSvgElem";
-import {callFunc, classNames} from "@wangct/util/lib/util";
+import {callFunc} from "@wangct/util/lib/util";
 import DefineComponent from "../../frame/components/DefineComponent";
 import {mousedown} from "../../utils/domUtil";
+import {classNames} from "@wangct/util/lib/browserUtil";
 
 class BaseNode extends DefineComponent {
   state = {
