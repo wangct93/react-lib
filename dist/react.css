@@ -98,8 +98,8 @@
   position: relative;
 }
 .test-drag-elem {
-  height: 100px;
-  width: 100px;
+  height: 400px;
+  width: 400px;
   background-color: #f1f1f1;
 }
 .w-drag-elem {
@@ -110,6 +110,14 @@
   height: 100%;
   user-select: none;
   touch-action: none;
+}
+.log {
+  height: 300px;
+  overflow: auto;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
 }
 .w-flex {
   display: flex;

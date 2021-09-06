@@ -1,1 +1,1 @@
-import global_9l49gxzqbi from '../../models/global.js'; export default [global_9l49gxzqbi];
+import global_5suf8cmz12 from '../../models/global.js'; export default [global_5suf8cmz12];

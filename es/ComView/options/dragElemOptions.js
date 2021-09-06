@@ -40,7 +40,7 @@ export default [
       '      return <Table data={dataSource} columns={columns} />;',
     desc:'简单的表格',
     render:() => {
-      return <div className={"test-drag-box"}>
+      return <div className={"test-drag-box fixed"}>
         <DragElem  className={"test-drag-elem"}>
           <div></div>
         </DragElem>
