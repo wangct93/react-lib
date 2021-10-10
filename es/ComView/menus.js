@@ -6,6 +6,8 @@ import optionInputOptions from "./options/optionInputOptions";
 import svgEditorOptions from "./options/svgEditorOptions";
 import selectOptions from "./options/selectOptions";
 import dragElemOptions from "./options/dragElemOptions";
+import sliderOptions from "./options/sliderOptions";
+import treeOptions from "./options/treeOptions";
 
 
 export default [
@@ -43,5 +45,15 @@ export default [
     title:'拖拽 DragElem',
     path:FieldsRoutePaths.dragElem,
     options:dragElemOptions,
+  },
+  {
+    title:'轮播图 Slider',
+    path:FieldsRoutePaths.slider,
+    options:sliderOptions,
+  },
+  {
+    title:'树 Tree',
+    path:FieldsRoutePaths.tree,
+    options:treeOptions,
   }
 ];

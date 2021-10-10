@@ -22,5 +22,7 @@ export const FieldsRoutePaths = {
   optionInput:'/option-input',
   svgEditor:'/svgEditor',
   select:'/select',
-  dragElem:'/dragElem'
+  dragElem:'/dragElem',
+  slider:'/slider',
+  tree:'/tree',
 };

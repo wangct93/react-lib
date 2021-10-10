@@ -27,9 +27,9 @@ async function updateComponent(){
   let list = fs.readdirSync(pathResolve(componentDir));
   list = list.filter(item => {
     const filePath = pathResolve(componentDir,item);
-    return util.isDir(filePath) && util.isExist(pathResolve(filePath,'index.js.js'));
+    return util.isDir(filePath) && util.isExist(pathResolve(filePath,'index.js'));
   });
-  const componentOutput = pathResolve(componentDir,'index.js.js');
+  const componentOutput = pathResolve(componentDir,'index.js');
   const importContents = list.map(item => `import ${item} from './${item}';`);
   let content = `${importContents.join('')} export {${list.join(',')}};`;
   fs.writeFileSync(componentOutput,content);

@@ -15,7 +15,7 @@ export default class Flex extends DefineComponent {
 
   render() {
     const {props} = this;
-    return <div {...getDivProps(props)} className={classNames('w-flex',props.className,props.column && 'w-flex-column',props.verticalCenter && 'w-flex-vertical-center',props.center && 'w-flex-center',props.wrap && 'w-flex-wrap')}>{props.children}</div>;
+    return <div {...getDivProps(props)} className={classNames('w-flex',props.className,props.column && 'w-flex-column',props.verticalCenter && 'w-flex-vertical-center',props.center && 'w-flex-center',props.wrap && 'w-flex-wrap')} ref={props.divRef}>{props.children}</div>;
   }
 }
 
@@ -29,7 +29,12 @@ export class FlexItem extends DefineComponent {
   render() {
     const {props} = this;
     const Com = props.flex ? Flex : 'div';
-    return <Com {...getDivProps(props)} className={classNames('w-flex-item',props.className)}>{props.children}</Com>;
+    const extProps = props.flex ? {
+      divRef:props.divRef,
+    } : {
+      ref:props.divRef,
+    };
+    return <Com {...getDivProps(props)} {...extProps} className={classNames('w-flex-item',props.className)}>{props.children}</Com>;
   }
 }
 

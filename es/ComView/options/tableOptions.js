@@ -74,9 +74,7 @@ export default [
         },
       ];
 
-      return <Table rowSelection={{
-
-      }} data={dataSource} columns={columns} />;
+      return <Table rowSelection={{}} data={dataSource} columns={columns} />;
     },
   },
   {

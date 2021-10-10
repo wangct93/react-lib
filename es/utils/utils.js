@@ -58,7 +58,7 @@ export function getInputCom(type){
  */
 export function getDivProps(props){
   const newProps = {...props};
-  const fields = ['column','verticalCenter','wrap','draw','data','showList','showPreview'];
+  const fields = ['column','verticalCenter','wrap','draw','data','showList','showPreview','divRef'];
   fields.forEach((field) => {
     delete newProps[field];
   });

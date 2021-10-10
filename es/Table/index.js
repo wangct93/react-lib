@@ -25,10 +25,9 @@ export default class Table extends DefineComponent {
     fontSize:14,
     scrollLeftMin:true,
     scrollLeftMax:true,
-    rowSelection:{
-
-    },
+    rowSelection:null,
     rowClick:true,
+    hoverIndex:null,
   };
 
   componentDidMount() {
@@ -169,12 +168,37 @@ export default class Table extends DefineComponent {
     if(rowSelection && this.getProp('rowClick')){
       const tempClick = tdProps.onClick;
       tdProps.onClick = (e) => {
-        const key = this.getRowKey(row,index);
-        const checked = this.getSelectedKeys().includes(key);
-        this.checkChange(key,!checked);
         callFunc(tempClick,e);
+        if(!e.isPropagationStopped()){
+          const key = this.getRowKey(row,index);
+          const checked = this.getSelectedKeys().includes(key);
+          this.checkChange(key,!checked);
+        }
       };
     }
+
+    const tempMouseEnter = tdProps.onMouseEnter;
+    tdProps.onMouseEnter = (e) => {
+      this.setState({
+        hoverIndex:index,
+      });
+      callFunc(tempMouseEnter,e);
+    };
+
+    const tempMouseLevel = tdProps.onMouseLeave;
+    tdProps.onMouseLeave = (e) => {
+      this.setState({
+        hoverIndex:null,
+      });
+      callFunc(tempMouseLevel,e);
+    };
+
+    const {hoverIndex} = this.state;
+    const hover = hoverIndex === index;
+    if(hover){
+      tdProps.className = classNames(tdProps,'w-table-tr-hover');
+    }
+
     return tdProps;
   }
 
@@ -265,40 +289,50 @@ export default class Table extends DefineComponent {
     }
     return <div className={className} style={{width:getFixedWidth(columns)}}>
       <div className="w-table-header">
-        <div className="w-table-tr">
-          {
-            columns.map((col,index) => {
-              return <div style={this.getTdStyle(col,hasFitColumn)} className="w-table-td w-table-header-td" key={index}>
-                <div className="w-table-td-content">{col.title}</div>
-              </div>;
-            })
-          }
-        </div>
+        {
+          this.getHeaderTr(columns,hasFitColumn)
+        }
       </div>
       <div className="w-table-body">
         <div className="w-table-content">
           {
-            this.getData().map((row,rowIndex) => {
-              const trProps = this.getTrProps(row,rowIndex);
-              return <div {...trProps} className={classNames('w-table-tr',trProps.className)} key={rowIndex}>
-                {
-                  columns.map((col,index) => {
-                    const {render} = col;
-                    let value = row[col.field];
-                    value = render ? render(value,row,rowIndex) : value;
-                    return <div style={this.getTdStyle(col,hasFitColumn)} className="w-table-td" key={index}>
-                      <div className="w-table-td-content">
-                        {value}
-                      </div>
-                    </div>;
-                  })
-                }
-              </div>
-            })
+            this.getBodyContent(columns,hasFitColumn)
           }
         </div>
       </div>
     </div>
+  }
+
+  getHeaderTr(columns = this.getColumns(),hasFitColumn = false){
+    return <div className="w-table-tr">
+      {
+        columns.map((col,index) => {
+          return <div style={this.getTdStyle(col,hasFitColumn)} className="w-table-td w-table-header-td" key={index}>
+            <div className="w-table-td-content">{col.title}</div>
+          </div>;
+        })
+      }
+    </div>;
+  }
+
+  getBodyContent(columns,hasFitColumn){
+    return this.getData().map((row,rowIndex) => {
+      const trProps = this.getTrProps(row,rowIndex);
+      return <div {...trProps} className={classNames('w-table-tr',trProps.className)} key={rowIndex}>
+        {
+          columns.map((col,index) => {
+            const {render} = col;
+            let value = row[col.field];
+            value = render ? render(value,row,rowIndex) : value;
+            return <div style={this.getTdStyle(col,hasFitColumn)} className="w-table-td" key={index}>
+              <div className="w-table-td-content">
+                {value}
+              </div>
+            </div>;
+          })
+        }
+      </div>
+    });
   }
 
   render() {
@@ -310,43 +344,21 @@ export default class Table extends DefineComponent {
     });
     return <div onClick={this.doTest} ref={this.setElem} className={classNames('w-table',this.isFit() && 'w-table-fit',state.hasScrollX && 'w-table-scroll-x',state.hasScrollY && 'w-table-scroll-y')}>
       <div className="w-table-header">
-        <div className="w-table-tr">
-          {
-            columns.map((col,index) => {
-              return <div style={this.getTdStyle(col,hasFitColumn)} className="w-table-td w-table-header-td" key={index}>
-                <div className="w-table-td-content">
-                  {col.title}
-                </div>
-              </div>;
-            })
-          }
-        </div>
+        {
+          this.getHeaderTr(columns,hasFitColumn)
+        }
       </div>
       <div onScroll={this.bodyScroll} className="w-table-body">
         <div className="w-table-content">
           {
-            this.getData().map((row,rowIndex) => {
-              return <div className="w-table-tr" key={rowIndex}>
-                {
-                  columns.map((col,index) => {
-                    const {render} = col;
-                    let value = row[col.field];
-                    value = render ? render(value,row,index) : value;
-                    return <div style={this.getTdStyle(col,hasFitColumn)} className="w-table-td" key={index}>
-                      <div className="w-table-td-content">
-                        {value}
-                      </div>
-                    </div>;
-                  })
-                }
-              </div>
-            })
+            this.getBodyContent(columns,hasFitColumn)
           }
         </div>
       </div>
       <div className={classNames('w-table-fixed',state.scrollLeftMin && 'w-table-fixed-scroll-left-min',state.scrollLeftMax && 'w-table-fixed-scroll-left-max')}>
         {
           this.getFixedContent({
+            isLeft:true,
             hasFitColumn,
           })
         }

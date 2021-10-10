@@ -1,1 +1,1 @@
-import global_5suf8cmz12 from '../../models/global.js'; export default [global_5suf8cmz12];
+import global_2v0gt3kgff from '../../models/global.js'; export default [global_2v0gt3kgff];
